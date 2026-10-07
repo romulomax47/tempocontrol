@@ -109,3 +109,38 @@ button {
 .medicao small {
   color: #555;
 }
+
+.demo-notice { padding: 12px 20px; background: #fff3cf; color: #563e00; font-size: 14px; }
+.cloud-app { max-width: 680px; text-align: left; overflow-wrap: anywhere; color-scheme: light; color: #222; }
+.cloud-app h1, .cloud-app h2 { color: #222; }
+.cloud-app h1 { font-size: clamp(32px, 7vw, 48px); line-height: 1.2; margin: 20px 0 8px; }
+.cloud-app h2 { line-height: 1.3; }
+.cloud-app h3 { font-size: 18px; line-height: 1.4; margin: 0 0 12px; }
+.cloud-app section, .management { margin-top: 28px; }
+.cloud-app form { margin-top: 18px; }
+.cloud-app input, .cloud-app select { min-width: 0; min-height: 44px; }
+.cloud-app button { min-height: 44px; background: #e6ebf0; color: #172a3a; }
+.cloud-app button[type="submit"] { background: #205343; color: white; }
+button:disabled { cursor: wait; opacity: .65; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #286cb5; outline-offset: 3px; }
+.cloud-app [role="alert"], .inline-warning { margin-top: 12px; color: #8a2020; background: #fdeaea; padding: 10px; border-radius: 6px; }
+.cloud-app [role="status"]:not(:empty) { margin-top: 12px; color: #205343; }
+.limit-hint { color: #555; margin-top: 8px; font-size: 14px; }
+.session-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; }
+.session-bar button { width: auto; margin: 0; padding: 8px 16px; }
+.auth-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.auth-links button { width: auto; flex: 1 1 130px; font-size: 14px; padding: 10px; margin-top: 12px; }
+.limits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.checkbox-label { display: flex; align-items: center; gap: 10px; font-weight: normal; }
+.checkbox-label input { width: 20px; min-height: 20px; }
+.equipment-list { list-style: none; padding: 0; }
+.equipment-list li { background: white; border-radius: 8px; padding: 12px; margin: 10px 0; }
+.equipment-list button { font-size: 14px; padding: 8px; margin-top: 10px; }
+.cloud-app .medicao-topo { gap: 12px; align-items: flex-start; }
+.cloud-app time { font-size: 14px; color: #555; }
+@media (max-width: 520px) {
+  .cloud-app { width: 94%; margin: 20px auto; }
+  .cloud-app form { padding: 16px; }
+  .cloud-app .medicao-topo { flex-wrap: wrap; }
+  .session-bar span { min-width: 0; }
+}

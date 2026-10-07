@@ -1,0 +1,13 @@
+{
+  "browser": "154.0.8037.98",
+  "viewport": "375x812",
+  "httpFixtures": true,
+  "liveSupabase": false,
+  "measurements": 2,
+  "reloadPreservedHistory": true,
+  "horizontalOverflow": false,
+  "darkPreferenceReadable": true,
+  "localMeasurementKeys": [],
+  "logoutClearedData": true,
+  "pageErrors": []
+}

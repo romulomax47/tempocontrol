@@ -1,16 +1,46 @@
-# React + Vite
+# TempControl
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação React + Vite para registrar temperaturas por restaurante, com Supabase
+Auth e PostgreSQL/RLS. O baseline local continua disponível em desenvolvimento
+sem configuração; produção exige Supabase.
 
-Currently, two official plugins are available:
+- [Auditoria, arquitetura e schema](docs/MVP.md)
+- [Configuração, migrations, variáveis e deploy](docs/DEPLOY.md)
+- [Supabase do zero e checklist de aceite real](docs/SUPABASE_SETUP.md)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Desenvolvimento e verificações
 
-## React Compiler
+- `npm install`
+- `npm run dev`
+- `npm test` — testes de interface com Vitest e React Testing Library.
+- `npm run build`
+- `npm run lint`
+- `npm run test:db` — migration e isolamento com PostgreSQL embarcado.
+- `npm run check:env` — valida as variáveis públicas antes do deploy.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O Vitest usa `vmThreads` com um único worker. Neste ambiente Windows, os pools
+padrão `forks` e `threads` excederam o timeout de inicialização antes de carregar
+os testes. O contexto VM executa a mesma suíte, sem desativar testes ou assertions.
 
-## Expanding the ESLint configuration
+Para repetir a verificação no Chrome instalado, inicie
+`npm run dev -- --host 127.0.0.1 --port 4173 --strictPort`, instale a ferramenta opcional com
+`npm install --no-save --package-lock=false playwright` e execute
+`node scripts/verify-browser-history.mjs`. O script usa um contexto novo com
+dados sintéticos, registra duas medições e compara o histórico após uma recarga
+real. Evidências ficam em `verification/`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+`node scripts/diagnose-vitest.mjs` verifica versões, imports e a inicialização
+independente de um subprocesso e uma thread, incluindo os entrypoints do Vitest.
+
+## Histórico local de desenvolvimento e recuperação
+
+Esta seção descreve somente o baseline local. No modo Supabase, as medições
+são persistidas no PostgreSQL com autoria e isolamento por restaurante.
+
+A chave canônica é `tempcontrol_medicoes`. Na abertura, registros válidos dela e de `Tempcontrol_medicoes` são reunidos. Cópias iguais entre as chaves são deduplicadas pelos campos da medição; repetições dentro de uma mesma origem são preservadas. A chave antiga permanece como fonte de recuperação.
+
+JSON corrompido e listas com registros inválidos geram aviso. Antes de substituir dados danificados, o conteúdo original é preservado em `<chave>.backup`. Um backup diferente já existente não é sobrescrito: nesse caso, a gravação é bloqueada e a interface avisa. Somente registros válidos são exibidos.
+
+Se a leitura do armazenamento falhar, nenhuma chave é sobrescrita. Falhas de gravação mantêm as medições na sessão e exibem aviso; esses registros não sobrevivem a uma recarga. Reabra a página depois de restabelecer o acesso ao armazenamento.
+
+Sem identificadores nas medições antigas, cópias com todos os campos iguais entre as duas chaves são consideradas a mesma medição. O armazenamento é local ao navegador, sem sincronização entre dispositivos ou abas simultâneas.
