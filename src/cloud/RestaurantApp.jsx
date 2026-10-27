@@ -39,7 +39,10 @@ export default function RestaurantApp({ client }) {
     finally { setSigningOut(false); }
   }
   return <main className="container cloud-app">
-    <header><h1>TempControl</h1><p className="subtitle">Controle de temperatura de equipamentos</p></header>
+    <header className="brand-header">
+      <span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M9 14.8V5a3 3 0 0 1 6 0v9.8a5 5 0 1 1-6 0Z" /><path d="M12 8v9" /><circle cx="12" cy="18" r="1" /></svg></span>
+      <div><h1>TempControl</h1><p className="subtitle">Controle de temperatura de equipamentos</p></div>
+    </header>
     {auth.loading ? <p role="status">Verificando sessão…</p> : auth.error ? <>
       <p role="alert">{auth.error}</p>
       <button onClick={() => { setAuth(value => ({ ...value, loading: true })); setRetry(value => value + 1); }}>Tentar novamente</button>

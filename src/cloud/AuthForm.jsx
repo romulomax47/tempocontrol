@@ -32,7 +32,7 @@ export default function AuthForm({ client, recovery = false, onRecovered }) {
     finally { setBusy(false); }
   }
   function switchMode(next) { setMode(next); setError(''); setMessage(''); setPassword(''); }
-  return <section aria-labelledby="auth-title">
+  return <section className="auth-panel" aria-labelledby="auth-title">
     <h2 id="auth-title">{titles[mode]}</h2>
     <form onSubmit={submit} noValidate aria-busy={busy}>
       {mode !== 'update' && <><label htmlFor="auth-email">E-mail</label>

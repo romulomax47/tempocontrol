@@ -70,7 +70,11 @@ export default function Dashboard({ user, repository }) {
   return <>
     <section className="restaurant-heading"><h2>{member.restaurants.name}</h2><p>Responsável: {member.display_name}</p>
       <button onClick={refresh} disabled={busy || moreBusy}>Atualizar histórico</button></section>
+    <div className="dashboard-grid">
     <form onSubmit={record} noValidate aria-busy={busy} aria-label="Registrar medição">
+      <p className="form-eyebrow">Monitoramento</p>
+      <h2>Nova medição</h2>
+      <p className="form-description">Registre a temperatura e acompanhe os limites do equipamento.</p>
       <label htmlFor="cloud-equipment">Equipamento</label>
       <select id="cloud-equipment" value={equipmentId} disabled={busy} aria-invalid={Boolean(errors.equipment)}
         aria-describedby={errors.equipment ? 'cloud-equipment-error' : undefined} onChange={event => setEquipmentId(event.target.value)}>
@@ -99,6 +103,7 @@ export default function Dashboard({ user, repository }) {
       {historyError && <p role="alert">{historyError}</p>}
       {workspace.hasMore && <button disabled={moreBusy || busy} onClick={loadMore}>{moreBusy ? 'Carregando…' : 'Carregar mais medições'}</button>}
     </section>
+    </div>
     {member.role === 'owner' && <div className="management">
       <EquipmentManager equipment={equipment} restaurantId={member.restaurant_id} repository={repository}
         onSaved={item => setWorkspace(current => ({ ...current, equipment: [...current.equipment.filter(row => row.id !== item.id), item] }))} />
